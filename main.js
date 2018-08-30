@@ -3,33 +3,32 @@ const { exec } = require('child_process')
 const os = require('os')
 const path = require('path')
 
-// Deve-se manter uma referência global de objeto BrowserWindow, evitando
-// que a janela seja fechada quando o JavaScript executar o garbage colletor
+// Keeping a globa referente to BrowserWindow avoid that JavaScript garbage collect the window
 let mainWindow
 
 function createBrowser () {
-    // Limpa o cache e o banco de dados antes de iniciar a aplicação
+    // Clean cache and local data before start
     session.defaultSession.clearCache(() => {})
     session.defaultSession.clearStorageData()
     session.defaultSession.setProxy({
-        pacScript: 'http://proxy.prevnet/proxy.pac'
+        pacScript: 'http://localhost/proxy.pac'
     }, () => {})
     
-    // Cria uma instância global de objeto BrowserWindow
+    // Create the global instance of BrowserWindow
     mainWindow = new BrowserWindow({
         fullscreen: true,
-        resizable: true, // True para compatibilidade com Openbox, senão a janela não fica fullscreen
+        resizable: true, // True for compatibility with Openbox, otherwise the window won't be fullscreen
         minimizable: false, 
         maximizable: false, 
         kiosk: true,
         webPreferences: {
             sandbox: true, 
-            plugins: false, // Habilita os plugins nativos do Chromium para a visualização do PDF
-            nodeIntegration: true // Habilita integração para permitir execução do comando de impressão
+            plugins: false, // Activate Chromium plugins for PDF view
+            nodeIntegration: true // Activate NodeJS integration for print service
         } 
     })
 
-    mainWindow.loadURL('https://meu.inss.gov.br')
+    mainWindow.loadURL('https://www.google.com.br') // The kiosk web page
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
@@ -40,14 +39,13 @@ function createBrowser () {
         app.exit(0)
     })
 
-    globalShortcut.register('F5', () => { // Define a tecla F5 para reiniciar o aplicativo
-        app.relaunch() // Cria o processo da aplicação
-        app.exit(0) // Encerra o processo corrente, permitindo que o novo processo seja ativado
+    globalShortcut.register('F5', () => { // Define F5 key to restart the app
+        app.relaunch() // Recreate the app
+        app.exit(0) // Close the current app.
     })
 
-    // Habilita um listener para identificar pedido de impressão de PDF. 
-    // Em ambiente Windows, o PDF é impresso com o utilitário PDFtoPrinter.exe, visível na variável PATH
-    // Em ambiente Linux, o PDF é impresso ld, considerando que a impressora instalada possui o nome DefaultPrinter
+    // Enable a listener to directly prin PDF
+    // In Linux, the default printer must have the name DefaultPrinter
     mainWindow.webContents.session.on('will-download', function(event, item, webContents) {
         let filePath = path.format({
             dir: os.tmpdir(),
@@ -56,39 +54,8 @@ function createBrowser () {
         item.setSavePath(filePath)
         item.once('done', (event, state) => {
             if (state === 'completed') {
-                // Imprime de acordo com o ambiente nativo.
-                // Os ambientes suportados são Windows e Linux
+                // The only supported environment is Linux
                 switch (os.platform()) {
-                    case 'win32':
-                        exec('wmic printer where default=true get deviceid /value', (error, stdout, stderr) => {
-                            if (error) {
-                                dialog.showMessageBox(mainWindow, {
-                                    type: 'error',
-                                    buttons: ['OK'],
-                                    message: 'Impressora não identificada'
-                                })
-                                return;
-                            }
-                            let deviceId = stdout.replace('DeviceID=', '').replace(/\r/g, '').replace(/\n/g, '')
-                            let command = 'PDFtoPrinter.exe'.concat(' ').concat(filePath).concat(' ').concat(deviceId)
-                            exec(command, (error, stdout, stderr) => {
-                                if (error) {
-                                    dialog.showMessageBox(mainWindow, {
-                                        type: 'error',
-                                        buttons: ['OK'],
-                                        message: 'Falha no comando de impressão'
-                                    })
-                                    return
-                                } else {
-                                    dialog.showMessageBox(mainWindow, {
-                                        type: 'info',
-                                        buttons: ['OK'],
-                                        message: 'Seu documento sairá na impressora em até 10 segundos!'
-                                    }) 
-                                }
-                            })
-                        })
-                    break
                     case 'linux' :
                         let command = 'lp'.concat(' -d DefaultPrinter ').concat(filePath)
                         exec(command, (error, stdout, stderr) => {
@@ -96,14 +63,14 @@ function createBrowser () {
                                 dialog.showMessageBox(mainWindow, {
                                     type: 'error',
                                     buttons: ['OK'],
-                                    message: 'Falha no comando de impressão'
+                                    message: 'Print command error'
                                 })
                                 return
                             } else {
                                 dialog.showMessageBox(mainWindow, {
                                     type: 'info',
                                     buttons: ['OK'],
-                                    message: 'Seu documento sairá na impressora em até 10 segundos!'
+                                    message: 'Print command success'
                                 }) 
                             }
                         })
@@ -119,8 +86,8 @@ function createBrowser () {
 app.on('ready', createBrowser)
 
 app.on('browser-window-created', function(e, appWindow){
-    appWindow.setMenu(null) // Desabilita o menu de aplicação padrão do Electron
-    if (mainWindow) { // Toda janela extra é filha da janela principal
+    appWindow.setMenu(null) // Disable app menu from Electron
+    if (mainWindow) { // Turn every window child of main window
         appWindow.setParentWindow = mainWindow
     }
 })
@@ -134,7 +101,7 @@ app.on('activate', function () {
 })
 
 app.on('certificate-error', (event, webContents, url, error, certificate, callback) => {
-    // Ignora erros de certificado
+    // Bypass certificate errors
     event.preventDefault()
     callback(true)
 })
