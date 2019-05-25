@@ -25,13 +25,16 @@ function checkRoot {
 		log_failure_msg $title
 		log_failure_msg $alert
 		return 126
+	else
+		return 0
 	fi
 
 }
 
 function proxySet {
 
-	if checkRoot; then; return 126; fi
+	checkRoot
+	if [ $? -ne 0 ]; then return 126; fi
 
 	local title="Setting proxy configuration..."
 	local alert1="File /etc/apt/apt.conf will be replaced"
@@ -59,7 +62,8 @@ function proxySet {
 
 function proxyUnset {
 
-	if checkRoot; then; return 126; fi
+	checkRoot
+	if [ $? -ne 0 ]; then return 126; fi
 
 	local title="Cleanning proxy configuration"
 	local alert1="File /etc/apt/apt.conf will be replaced"
