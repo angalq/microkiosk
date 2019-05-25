@@ -41,12 +41,12 @@ function proxySet {
 	local success="Configuration complete"
 	local alert3="To clean proxy configuration, use proxyUnset command"
 
-	log_warning_msg $titulo
+	log_warning_msg $title
 	log_warning_msg $alert1
 	log_warning_msg $alert2
 
 	read -p "Username: " proxy_uid
-	read -sp "Password: " proxy_pwd
+	read -sp "Password: " proxy_pwd; echo
   	read -p "Proxy IP: " proxy_ip
   	read -p "Proxy port: " proxy_port
 
