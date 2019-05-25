@@ -6,7 +6,7 @@ dependency1=/lib/lsb/init-functions
 
 if [ -e $dependency1 ]
 then
-	source $dependency1 2>&1 > /dev/null
+	source $dependency1 > /dev/null 2>&1
 fi
 
 function exitIfCanceled {
