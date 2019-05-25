@@ -36,7 +36,7 @@ function proxySet {
 	checkRoot
 
 	local title="Setting proxy configuration..."
-	local alert1'="File /etc/apt/apt.conf will be replaced"
+	local alert1="File /etc/apt/apt.conf will be replaced"
 	local alert2="Variable http_proxy will be set or replaced"
 	local success="Configuration complete"
 	local alert3="To clean proxy configuration, use proxyUnset command"
