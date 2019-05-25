@@ -11,9 +11,13 @@ fi
 
 function exitIfCanceled {
 
-	if [ $1 -ne 0 ]
+	# Parameter extension syntax
+	# See https://www.gnu.org/software/bash/manual/html_node/Brace-Expansion.html
+	if [ ! -z ${1+x} ] && [ $1 -ne 0 ]
 	then
 		return $1
+	else
+		return 0
 	fi
 
 }
