@@ -1,6 +1,13 @@
 # These functions help microkiosk build
 # To use them, just run the command:
-# $ . ./build-tools.sh
+# $ source ./build-tools.sh
+
+dependency1=/lib/lsb/init-functions
+
+if [ -e $dependency1 ]
+then
+	source $dependency1 2>&1 > /dev/null
+fi
 
 function exitIfCanceled {
 
