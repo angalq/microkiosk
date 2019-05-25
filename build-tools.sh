@@ -9,19 +9,6 @@ then
 	source $dependency1 > /dev/null 2>&1
 fi
 
-function exitIfCanceled {
-
-	# Parameter extension syntax
-	# See https://www.gnu.org/software/bash/manual/html_node/Brace-Expansion.html
-	if [ ! -z ${1+x} ] && [ $1 -ne 0 ]
-	then
-		return $1
-	else
-		return 0
-	fi
-
-}
-
 function urlEncode {
 
 	python -c "import urllib, sys; print urllib.quote(sys.argv[1])" $1
@@ -44,7 +31,7 @@ function checkRoot {
 
 function proxySet {
 
-	checkRoot
+	if checkRoot; then; return 126; fi
 
 	local title="Setting proxy configuration..."
 	local alert1="File /etc/apt/apt.conf will be replaced"
@@ -72,7 +59,8 @@ function proxySet {
 
 function proxyUnset {
 
-	checkRoot
+	if checkRoot; then; return 126; fi
+
 	local title="Cleanning proxy configuration"
 	local alert1="File /etc/apt/apt.conf will be replaced"
 	local alert2="Variable http_proxy will be unset"
