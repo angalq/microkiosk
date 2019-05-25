@@ -1,3 +1,7 @@
+# These functions help microkiosk build
+# To use them, just run the command:
+# $ . ./build-tools.sh
+
 function exitIfCanceled {
 
 	if [ $1 -ne 0 ]
