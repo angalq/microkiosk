@@ -47,8 +47,8 @@ function proxySet {
 
 	read -p "Username: " proxy_uid
 	read -sp "Password: " proxy_pwd
-  read -p "Proxy IP: " proxy_ip
-  read -p "Proxy port: " proxy_port
+  	read -p "Proxy IP: " proxy_ip
+  	read -p "Proxy port: " proxy_port
 
 	proxy_pwd=$(urlEncode $proxy_pwd)
 	bash -c "echo -e 'Acquire::http::Proxy \"http://$proxy_uid:$proxy_pwd@$proxy_ip:$proxy_port/\";' > /etc/apt/apt.conf"
