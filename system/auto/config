@@ -9,10 +9,9 @@ lb config noauto \
 	--apt-indices true \
 	--architectures amd64 \
 	--binary-images iso-hybrid \
-	# --debian-installer false \
+	--bootappend-live "boot=live components username=usuario live-config.user-default-groups=audio,video,usuario locales=en_US.UTF-8 keyboard-layouts=br keyboard-model=pc105" \
+	--debian-installer live \
 	--debian-installer-gui false \
 	--distribution stretch \
-	--initramfs none \
 	--mode debian \
-	--system normal \
 	"${@}"
