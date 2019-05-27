@@ -1,0 +1,13 @@
+xorg
+xterm
+openbox
+pulseaudio
+libgtk-3-0
+libxss1
+libnss3
+libnspr4
+libgconf-2-4
+python-minimal
+python-xdg
+cups
+openssh-server

@@ -1,0 +1,35 @@
+Package: xfonts-scalable
+Pin: version *
+Pin-Priority: -1
+
+Package: x11-utils
+Pin: version *
+Pin-Priority: -1
+
+Package: obconf
+Pin: version *
+Pin-Priority: -1
+
+Package: obsession
+Pin: version *
+Pin-Priority: -1
+
+Package: scrot
+Pin: version *
+Pin-Priority: -1
+
+Package: openbox-menu
+Pin: version *
+Pin-Priority: -1
+
+Package: rtkit
+Pin: version *
+Pin-Priority: -1
+
+Package: libgtk-3-bin
+Pin: version *
+Pin-Priority: -1
+
+Package: gconf-service
+Pin: version *
+Pin-Priority: -1

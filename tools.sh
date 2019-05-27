@@ -1,6 +1,6 @@
 # These functions help microkiosk build
 # To use them, just run the command:
-# $ source ./build-tools.sh
+# $ source ./tools.sh
 
 dependency1=/lib/lsb/init-functions
 
