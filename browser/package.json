@@ -1,0 +1,17 @@
+{
+  "name": "browser",
+  "productName": "BROWSER",
+  "version": "0.0.1",
+  "description": "The Microkiosk Browser",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-packager . browser --overwrite --asare --platform=linux --arch=x64 --prune=true --out=release-builds"
+  },
+  "author": "Andre Queiroz",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "electron": "^5.0.2",
+    "electron-packager": "^13.1.1"
+  }
+}

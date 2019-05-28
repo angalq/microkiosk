@@ -31,10 +31,10 @@
     <!--
     <action name="Restart" />
     -->
-    <action name="Execute"><execute>reboot</execute></action>
+    <action name="Execute"><execute>systemctl reboot</execute></action>
   </item>
   <item label="Shutdown">
-    <action name="Execute"><execute>shutdown -h now</execute></action>
+    <action name="Execute"><execute>systemctl poweroff</execute></action>
   </item>
 <!--
   <separator />
