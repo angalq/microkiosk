@@ -16,6 +16,7 @@ system/chroot.packages.*
 
 system/config/binary
 system/config/bootstrap
+system/config/build
 system/config/chroot
 system/config/common
 system/config/source

@@ -7,8 +7,9 @@ function installDependencies {
 	checkRoot
 	if [ $? -ne 0 ]; then exit 126; fi
 	curl -sL https://de.nodesource.com/setup_12.x | bash -
-	apt-get install -y nodejs
-	apt-get install -q=2 libnss3 libgdk-pixbuf2.0-0 libgtk-3-0 libxss1 libasound2
+	apt-get install -y nodejs \
+			   live-build live-boot live-tools live-config
+			   libnss3 libgdk-pixbuf2.0-0 libgtk-3-0 libxss1 libasound2
 
 }
 
@@ -60,5 +61,5 @@ case $1 in
 	cd ..
 	;;
 *)
-	echo -e "Usage: $0 (--clean | --build)"
+	echo -e 'Usage: $0 (--clean | --build)'
 esac

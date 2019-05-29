@@ -12,7 +12,7 @@
   </item>
 -->
   <item label="Open browser">
-    <action name="Execute"><execute>browser</execute></action>
+    <action name="Execute"><execute>/opt/browser-linux-x64/browser</execute></action>
   </item>
   <!-- This requires the presence of the 'menu' package to work -->
   <menu id="/Debian" />
