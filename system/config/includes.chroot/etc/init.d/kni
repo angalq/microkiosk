@@ -25,7 +25,7 @@ start)
     value=`pgrep -f 'nc -l -v 55555'; echo $?`
     if [ "$value" -ne 0 ]
     then
-        runuser -l usuario -c 'while true; do printf "Kiosk in `hostname`" | nc -l -v 55555; sleep 0.05s; done' >> /var/log/kni.log 2>&1 &
+        /sbin/runuser -l usuario -c 'while true; do printf "Kiosk in `hostname`" | nc -l -v 55555; sleep 0.05s; done' >> /var/log/kni.log 2>&1 &
         log_end_msg $?
     else
         log_end_msg 1
@@ -47,4 +47,3 @@ stop)
 *)
     echo "Use: $0 (start | stop)"
 esac
-

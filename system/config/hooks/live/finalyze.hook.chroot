@@ -1,0 +1,6 @@
+#! /bin/bash
+
+set -e
+
+update-rc.d kni defaults
+chmod 4755 /opt/browser-linux-x64/chrome-sandbox

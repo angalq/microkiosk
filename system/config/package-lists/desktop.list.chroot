@@ -11,3 +11,4 @@ python-minimal
 python-xdg
 cups
 openssh-server
+netcat

@@ -38,7 +38,7 @@ function proxySet {
 
 	local title="Setting proxy configuration..."
 	local alert1="File /etc/apt/apt.conf will be replaced"
-	local alert2="Variable http_proxy will be set or replaced"
+	local alert2="Variables http_proxy and https_proxy will be set"
 	local success="Configuration complete"
 	local alert3="To clean proxy configuration, use proxyUnset command"
 
@@ -54,6 +54,7 @@ function proxySet {
 	proxy_pwd=$(urlEncode $proxy_pwd)
 	bash -c "echo -e 'Acquire::http::Proxy \"http://$proxy_uid:$proxy_pwd@$proxy_ip:$proxy_port/\";' > /etc/apt/apt.conf"
 	export http_proxy=http://$proxy_uid:$proxy_pwd@$proxy_ip:$proxy_port/
+	export https_proxy=http://$proxy_uid:$proxy_pwd@$proxy_ip:$proxy_port/
 
 	log_success_msg $success
 	log_warning_msg $alert3
@@ -67,7 +68,7 @@ function proxyUnset {
 
 	local title="Cleanning proxy configuration"
 	local alert1="File /etc/apt/apt.conf will be replaced"
-	local alert2="Variable http_proxy will be unset"
+	local alert2="Variables http_proxy and https_proxy will be unset"
 	local success="Configuration complete"
 	local alert3="To set proxy configuration, use proxySet command"
 	log_warning_msg $title
@@ -77,6 +78,7 @@ function proxyUnset {
 	read -n 1 x
 	bash -c "echo -e '' > /etc/apt/apt.conf"
 	unset http_proxy
+	unset https_proxy
 	log_success_msg $success
 	log_warning_msg $alert3
 

@@ -6,11 +6,11 @@
                 file:///usr/share/openbox/menu.xsd">
 
 <menu id="root-menu" label="Openbox 3">
-<!-- Disable menu options
+<!-- Disable menu options -->
   <item label="Terminal emulator">
     <action name="Execute"><execute>x-terminal-emulator</execute></action>
   </item>
--->
+
   <item label="Open browser">
     <action name="Execute"><execute>/opt/browser-linux-x64/browser</execute></action>
   </item>
