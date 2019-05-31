@@ -31,7 +31,7 @@ function checkRoot {
 
 }
 
-function proxySet {
+function setProxy {
 
 	checkRoot
 	if [ $? -ne 0 ]; then return 126; fi
@@ -61,12 +61,12 @@ function proxySet {
 
 }
 
-function proxyUnset {
+function unsetProxy {
 
 	checkRoot
 	if [ $? -ne 0 ]; then return 126; fi
 
-	local title="Cleanning proxy configuration"
+	local title="Cleanning proxy configuration..."
 	local alert1="File /etc/apt/apt.conf will be replaced"
 	local alert2="Variables http_proxy and https_proxy will be unset"
 	local success="Configuration complete"
@@ -81,5 +81,33 @@ function proxyUnset {
 	unset https_proxy
 	log_success_msg $success
 	log_warning_msg $alert3
+
+}
+
+function setDebianPreseedFile {
+
+	local title="Setting Debian preseed file..."
+	local success="Configuration complete"
+	local alert1="To unset, use unsetDebianPreseedFile command"
+
+	log_warning_msg $title
+	read -p "File path/url: " di_preseed
+	log_success_msg $success
+	log_warning_msg $alert1
+
+}
+
+function unsetDebianInstallerPreseedFile {
+
+	local title="Unset Degian preseed file..."
+	local success="Configuration complete"
+	local alert1="To set, use setDegianPreseedFile command"
+
+	log_warning_msg $title
+	echo "Press any key to continue..."
+	read -n 1 x
+	unset $di_preseed
+	log_success_msg $success
+	log_warning_msg $alert1
 
 }
