@@ -1,10 +1,10 @@
 system/binary/
-system/binary*.iso
-system/binary*.img
-system/binary*.tar*
-system/binary*.contents
-system/binary*.packages
-system/binary*.zsync
+system/*.iso
+system/*.img
+system/*.tar*
+system/*.contents
+system/*.packages
+system/*.zsync
 
 system/.build/
 system/build.log
