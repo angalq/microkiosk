@@ -19,13 +19,15 @@ fi
 # Load service functions
 . /lib/lsb/init-functions
 
+message="Kiosk in `hostname`"
+
 case "$1" in
 start)
     log_begin_msg "Starting KNI - Kiosk Network Identification"
-    value=`pgrep -f 'nc -l -v 55555'; echo $?`
+    value=`pgrep -f "nc -l -p 55555"; echo $?`
     if [ "$value" -ne 0 ]
     then
-        /sbin/runuser -l usuario -c 'while true; do printf "Kiosk in `hostname`" | nc -l -v 55555; sleep 0.05s; done' >> /var/log/kni.log 2>&1 &
+        /sbin/runuser -l usuario -c "while true; do nc -l -p 55555 -c 'printf $message'; sleep 0.05s; done" >> /var/log/kni.log 2>&1 &
         log_end_msg $?
     else
         log_end_msg 1
@@ -34,7 +36,7 @@ start)
     ;;
 stop)
     log_begin_msg "Stoping KNI - Kiosk Network Identification"
-    pids=`pgrep -f 'nc -l -v 55555'`
+    pids=`pgrep -f "nc -l -p 55555"`
     if [ -n "$pids" ]
     then
         for i in $pids
@@ -45,5 +47,5 @@ stop)
     log_end_msg 0
     ;;
 *)
-    echo "Use: $0 (start | stop)"
+    echo "Use: $0 start|stop"
 esac
