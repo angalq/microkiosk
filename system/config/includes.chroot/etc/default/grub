@@ -1,0 +1,11 @@
+# GRUB Configuration
+# See: https://www.gnu.org/software/grub/manual/grub/html_node/Simple-configuration.html
+GRUB_DEFAULT=0
+GRUB_TIMEOUT=0
+GRUB_TIMEOUT_STYLE=hidden
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_DISABLE_RECOVERY="true"
+
+# Kernel parameters
+GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3"
+GRUB_CMDLINE_LINUX="console=tty12"
