@@ -87,38 +87,6 @@ function unsetProxy {
 
 }
 
-function setDebianPreseedFile {
-
-	local title="Setting Debian preseed file..."
-	local success="Configuration complete"
-	local message="To unset, use unsetDebianPreseedFile command"
-
-	log_warning_msg $title
-
-	read -p "File path/url: " di_preseed
-
-	log_success_msg $success
-	log_warning_msg $message
-
-}
-
-function unsetDebianInstallerPreseedFile {
-
-	local title="Unset Debian preseed file..."
-	local success="Configuration complete"
-	local message="To set, use setDebianPreseedFile command"
-
-	log_warning_msg $title
-
-	echo "Press any key to continue..."
-	read -n 1 x
-	unset $di_preseed
-
-	log_success_msg $success
-	log_warning_msg $message
-
-}
-
 function setGrubPassword {
 
 	local title="Set grub password..."
