@@ -71,17 +71,17 @@ function unsetProxy {
 	local message2="Variables http_proxy and https_proxy will be unset"
 	local message3="To set proxy configuration, use proxySet command"
 	local success="Configuration complete"
-	
+
 	log_warning_msg $title
 	log_warning_msg $message1
 	log_warning_msg $message2
-	
+
 	echo "Press any key to continue..."
 	read -n 1 x
 	bash -c "echo -e '' > /etc/apt/apt.conf"
 	unset http_proxy
 	unset https_proxy
-	
+
 	log_success_msg $success
 	log_warning_msg $message3
 
@@ -94,7 +94,9 @@ function setDebianPreseedFile {
 	local message="To unset, use unsetDebianPreseedFile command"
 
 	log_warning_msg $title
+
 	read -p "File path/url: " di_preseed
+
 	log_success_msg $success
 	log_warning_msg $message
 
@@ -107,9 +109,11 @@ function unsetDebianInstallerPreseedFile {
 	local message="To set, use setDebianPreseedFile command"
 
 	log_warning_msg $title
+
 	echo "Press any key to continue..."
 	read -n 1 x
 	unset $di_preseed
+
 	log_success_msg $success
 	log_warning_msg $message
 
@@ -128,23 +132,23 @@ function setGrubPassword {
 	log_warning_msg $message2
 
 	read -p "Username: " grub_uid
-    read -sp "Password: " passw1; echo
-    read -sp "Repeat password: " passw2; echo
+	read -sp "Password: " passw1; echo
+	read -sp "Repeat password: " passw2; echo
 	echo "Do you want unrestricted entries? (Y/N) "
 	read -n 1 x
-    
+
 	# See https://github.com/ryran/burg2-mkpasswd-pbkdf2
-    grub_pwd=`echo -e "$passw1\n$passw2" | grub-mkpasswd-pbkdf2 | awk '/grub.pbkdf/{print$NF}'`
-	
+	grub_pwd=`echo -e "$passw1\n$passw2" | grub-mkpasswd-pbkdf2 | awk '/grub.pbkdf/{print$NF}'`
+
 	# Check if grep command don't find 'set superusers'
-    if [ ! grep -q "set superusers" < /etc/grub.d/40_custom ]
-    then
-        bash -c "echo -e 'set superusers=\"$grub_uid\"\npassword_pbkdf2 $grub_uid $grub_pwd\n' >> /etc/grub.d/40_custom"
+	if [ ! grep -q "set superusers" < /etc/grub.d/40_custom ]
+	then
+		bash -c "echo -e 'set superusers=\"$grub_uid\"\npassword_pbkdf2 $grub_uid $grub_pwd\n' >> /etc/grub.d/40_custom"
 	else
 		sed -i 's:set superusers.*:set superusers=\"$grub_uid\":' /etc/grub.d/40_custom
 		set -i 's:password_pbkdf2.*:password_pbkdf2 $grub_uid $grub_pwd:' /etc/grub.d/40_custom
-    fi
-	
+	fi
+
 	if [ $x = "Y" ] || [ $x = "y" ]
 	then
 		# Check if grep command don't find the parameter
@@ -161,7 +165,7 @@ function setGrubPassword {
 			sed -i 's:CLASS="--class gnu-linux --class gnu --class os --unrestricted":CLASS="--class gnu-linux --class gnu --class os":' /etc/grub.d/10_linux
 		fi
 	fi
-	
+
 	log_success_msg $success
 	log_warning_msg $message3
 
@@ -174,13 +178,13 @@ function unsetGrubPassword {
 	local message2="File /etc/grub.d/10_linux will change"
 	local message3="To set, use setGrubPassword command"
 	local success="Configuration complete"
-	
+
 	echo "Press any key to continue..."
 	read -n 1 x
-	
+
 	sed -i 's:set superusers.*::' /etc/grub.d/40_custom
 	set -i 's:password_pbkdf2.*::' /etc/grub.d/40_custom
-	
+
 	log_success_msg $success
 	log_warning_msg $message3
 
