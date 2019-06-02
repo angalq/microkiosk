@@ -11,6 +11,7 @@ system/build.log
 
 system/cache/
 
+system/chroot.files
 system/chroot/
 system/chroot.packages.*
 
@@ -22,6 +23,8 @@ system/config/common
 system/config/source
 system/config/control
 system/config/includes.chroot/opt/
+
+system/live-image-amd64.files
 
 system/source/
 system/source*.iso
